@@ -1,0 +1,17 @@
+{
+  "name": "makalah-unri-si",
+  "version": "4.0.0",
+  "private": true,
+  "description": "Generator makalah DOCX untuk Program Studi Sistem Informasi FMIPA UNRI",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "check": "python3 scripts/check_content.py assets/example_content.json",
+    "syntax": "node --check scripts/build_makalah.js && node --check scripts/omml.js"
+  },
+  "dependencies": {
+    "docx": "^9.5.1"
+  }
+}

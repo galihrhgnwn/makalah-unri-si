@@ -1,5 +1,13 @@
 # Catatan perubahan
 
+## Belum dirilis
+
+- Menambahkan `package.json` dan `package-lock.json` agar dependency Node.js
+  dapat dipasang secara reproducible dengan `npm install`.
+- Menambahkan pemeriksaan awal untuk Node.js, paket `docx`, dan LibreOffice.
+- Mengganti daftar angka Romawi statis dengan konversi dinamis, sehingga bab
+  atau halaman pendahuluan yang melebihi sepuluh tidak menghasilkan error.
+
 ## v4.0.0 (2026-10-23)
 
 Fitur baru:

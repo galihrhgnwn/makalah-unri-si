@@ -55,13 +55,17 @@ Call the skill with `/makalah-unri-si` and send the paper details: title, course
 
 ## Manual use (without Claude)
 
-Requirements: Node.js, the `docx` npm package, Python 3, LibreOffice (`soffice`), and optionally `pandoc` and `poppler-utils`.
+Requirements: Node.js 18 or newer, Python 3, LibreOffice (`soffice`), and optionally `pandoc` and `poppler-utils`.
 
 ```bash
-npm install docx
+npm install
 cp assets/example_content.json content.json
 python3 scripts/build.py content.json out/Paper.docx --tabel --preview
 ```
+
+`package-lock.json` pins dependency versions so builds use the same packages. If
+Node.js, the `docx` package, or LibreOffice is missing, the build stops early
+and tells you what to install.
 
 Options: `--strict` (warnings stop the build), `--tabel` (print the reference status table), `--preview` (render key pages to PNG), `--tanpa-cek` (skip the validator). Set `MAKALAH_SOFFICE` to point at a specific LibreOffice command.
 

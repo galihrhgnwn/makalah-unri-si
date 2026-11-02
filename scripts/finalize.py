@@ -23,8 +23,19 @@ args = ap.parse_args()
 raw, hpath, out = args.raw, args.headings, args.out
 heads = json.load(open(hpath, encoding='utf8'))
 TEXT_W = 7937
-ROMAN = ['i', 'ii', 'iii', 'iv', 'v', 'vi', 'vii', 'viii', 'ix', 'x']
 SKILL_SOFFICE = '/mnt/skills/public/docx/scripts/office/soffice.py'
+
+
+def roman(n):
+    values = ((1000, 'm'), (900, 'cm'), (500, 'd'), (400, 'cd'),
+              (100, 'c'), (90, 'xc'), (50, 'l'), (40, 'xl'),
+              (10, 'x'), (9, 'ix'), (5, 'v'), (4, 'iv'), (1, 'i'))
+    result = ''
+    for value, symbol in values:
+        while n >= value:
+            result += symbol
+            n -= value
+    return result
 
 
 def soffice_cmd():
@@ -67,7 +78,7 @@ def compute(pages):
     bab1 = next((i for i in range(2, len(pages)) if match(babs[0]['lines'], pages[i])), None)
     if bab1 is None:
         raise SystemExit('Heading Bab I tidak ditemukan di PDF')
-    label = lambda p: ROMAN[p] if p < bab1 else str(p - bab1 + 1)
+    label = lambda p: roman(p + 1) if p < bab1 else str(p - bab1 + 1)
     entries, cur = [], 2
     for h in heads:
         if h.get('label'):  # HALAMAN JUDUL (i) dan DAFTAR ISI (ii) letaknya tetap

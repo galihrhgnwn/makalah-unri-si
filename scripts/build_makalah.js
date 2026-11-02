@@ -36,7 +36,16 @@ const IND1 = 567;    // teks subbab (1.1)
 const IND2 = 1361;   // teks sub-subbab (1.1.1)
 const SP = { line: 360, lineRule: LineRuleType.AUTO, before: 0, after: 0 };
 const J = AlignmentType.JUSTIFIED;
-const ROMAN = ["", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"];
+function roman(n) {
+  const values = [[1000, "M"], [900, "CM"], [500, "D"], [400, "CD"],
+    [100, "C"], [90, "XC"], [50, "L"], [40, "XL"], [10, "X"],
+    [9, "IX"], [5, "V"], [4, "IV"], [1, "I"]];
+  let result = "";
+  for (const [value, symbol] of values) {
+    while (n >= value) { result += symbol; n -= value; }
+  }
+  return result;
+}
 const CM = 567; // twip per cm
 const PX_PER_CM = 37.795;
 
@@ -279,8 +288,9 @@ const babChildren = [];
 (data.bab || []).forEach((bab, bi) => {
   const bn = bi + 1;
   const babTitle = String(bab.judul).toUpperCase();
-  headings.push({ level: 1, text: `BAB ${ROMAN[bn]} ${babTitle}`, lines: [`BAB ${ROMAN[bn]}`, babTitle] });
-  babChildren.push(h1([`BAB ${ROMAN[bn]}`, babTitle], bn > 1));
+  const babRoman = roman(bn);
+  headings.push({ level: 1, text: `BAB ${babRoman} ${babTitle}`, lines: [`BAB ${babRoman}`, babTitle] });
+  babChildren.push(h1([`BAB ${babRoman}`, babTitle], bn > 1));
   (bab.sections || []).forEach((sec, si) => {
     const sn = `${bn}.${si + 1}`;
     headings.push({ level: 2, text: `${sn} ${sec.judul}`, lines: [`${sn} ${sec.judul}`] });

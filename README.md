@@ -124,10 +124,10 @@ Setelah file jadi:
 
 ## Cara pakai manual (tanpa Claude)
 
-Kebutuhan: Node.js, paket npm `docx`, Python 3, LibreOffice (`soffice`) untuk menghitung nomor halaman, dan opsional `pandoc` dan `poppler-utils` (`pdftoppm`, `pdftotext`) untuk cek rumus dan preview.
+Kebutuhan: Node.js versi 18 atau lebih baru, Python 3, LibreOffice (`soffice`) untuk menghitung nomor halaman, dan opsional `pandoc` dan `poppler-utils` (`pdftoppm`, `pdftotext`) untuk cek rumus dan preview.
 
 ```bash
-npm install docx
+npm install
 
 # 1. salin dan edit contoh isi (skemanya ada di references/schema.md)
 cp assets/example_content.json content.json
@@ -135,6 +135,10 @@ cp assets/example_content.json content.json
 # 2. satu perintah: cek isi, bangun, daftar isi, validasi, preview
 python3 scripts/build.py content.json hasil/Makalah_Judul.docx --tabel --preview
 ```
+
+`package-lock.json` mengunci versi dependency agar hasil build konsisten. Jika Node.js,
+paket `docx`, atau LibreOffice belum tersedia, build akan berhenti lebih awal dengan
+pesan perbaikan yang sesuai.
 
 Opsi `build.py`:
 

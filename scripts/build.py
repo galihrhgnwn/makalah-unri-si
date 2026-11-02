@@ -42,6 +42,25 @@ def node_env():
     return e
 
 
+def preflight():
+    if shutil.which('node') is None:
+        print('GALAT: Node.js tidak ditemukan. Pasang Node.js versi 18 atau lebih baru.')
+        sys.exit(1)
+    try:
+        subprocess.run(['node', '-e', "require('docx')"], check=True,
+                       stdout=subprocess.DEVNULL, stderr=subprocess.PIPE,
+                       text=True, env=node_env())
+    except subprocess.CalledProcessError:
+        print('GALAT: paket npm "docx" belum terpasang. Jalankan "npm install" di folder skill.')
+        sys.exit(1)
+    if not os.environ.get('MAKALAH_SOFFICE') and not shutil.which('soffice'):
+        print('GALAT: LibreOffice (soffice) tidak ditemukan. Pasang LibreOffice atau set MAKALAH_SOFFICE.')
+        sys.exit(1)
+
+
+preflight()
+
+
 # 1. cek isi
 if not args.tanpa_cek:
     banner('1. Cek isi (check_content.py)')
